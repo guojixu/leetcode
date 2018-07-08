@@ -1,4 +1,4 @@
-package com.guoxu.leetcode;
+package com.guoxu.hammingdistance;
 
 import java.io.BufferedReader;
 import java.io.IOException;
