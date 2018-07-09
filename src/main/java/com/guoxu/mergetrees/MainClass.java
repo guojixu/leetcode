@@ -1,4 +1,4 @@
-package com.guoxu.maxmumofbinarytree;
+package com.guoxu.mergetrees;
 
 /* -----------------------------------
  *  WARNING:
@@ -26,31 +26,35 @@ import java.util.Queue;
  *     TreeNode(int x) { val = x; }
  * }
  */
-
-class TreeNode {
+class TreeNode{
     int val;
     TreeNode left;
     TreeNode right;
     TreeNode(int x) { val = x; }
 }
+
 class Solution {
-    public int maxDepth(TreeNode root) {
-        int leftDepth = 0;
-        int rightDepth = 0;
-        if (root == null) {
-            return 0;
+    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
+        if(t1 == null && t2 == null){
+            return null;
         }
-        leftDepth = 1 + maxDepth(root.left);
-        rightDepth = 1 + maxDepth(root.right);
-        if (leftDepth >= rightDepth){
-            return leftDepth;
-        } else {
-            return rightDepth;
+        if(t1 != null && t2 == null){
+            return t1;
         }
+        if(t1 == null && t2 != null){
+            return t2;
+        }
+        if(t1 != null && t2 != null)
+        {
+            t1.val += t2.val;
+            t1.left = mergeTrees(t1.left,t2.left);
+            t1.right = mergeTrees(t1.right,t2.right);
+        }
+        return t1;
     }
 }
 
-public class MaxDepth {
+public class MainClass {
     public static TreeNode stringToTreeNode(String input) {
         input = input.trim();
         input = input.substring(1, input.length() - 1);
@@ -95,17 +99,43 @@ public class MaxDepth {
         return root;
     }
 
+    public static String treeNodeToString(TreeNode root) {
+        if (root == null) {
+            return "[]";
+        }
+
+        String output = "";
+        Queue<TreeNode> nodeQueue = new LinkedList<>();
+        nodeQueue.add(root);
+        while(!nodeQueue.isEmpty()) {
+            TreeNode node = nodeQueue.remove();
+
+            if (node == null) {
+                output += "null, ";
+                continue;
+            }
+
+            output += String.valueOf(node.val) + ", ";
+            nodeQueue.add(node.left);
+            nodeQueue.add(node.right);
+        }
+        return "[" + output.substring(0, output.length() - 2) + "]";
+    }
+
     public static void main(String[] args) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String line;
         while ((line = in.readLine()) != null) {
-            TreeNode root = stringToTreeNode(line);
+            TreeNode t1 = stringToTreeNode(line);
+            line = in.readLine();
+            TreeNode t2 = stringToTreeNode(line);
 
-            int ret = new Solution().maxDepth(root);
+            TreeNode ret = new Solution().mergeTrees(t1, t2);
 
-            String out = String.valueOf(ret);
+            String out = treeNodeToString(ret);
 
             System.out.print(out);
         }
     }
 }
+

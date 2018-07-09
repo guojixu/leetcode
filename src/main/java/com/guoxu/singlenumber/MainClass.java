@@ -14,7 +14,7 @@ class Solution {
     }
 }
 
-public class SingleNumber {
+public class MainClass {
     public static int[] stringToIntegerArray(String input) {
         input = input.trim();
         input = input.substring(1, input.length() - 1);

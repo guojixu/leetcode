@@ -1,4 +1,4 @@
-package com.guoxu.mergetrees;
+package com.guoxu.sametree;
 
 /* -----------------------------------
  *  WARNING:
@@ -26,35 +26,31 @@ import java.util.Queue;
  *     TreeNode(int x) { val = x; }
  * }
  */
-class TreeNode{
+class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
-    TreeNode(int x) { val = x; }
+    TreeNode(int x) {val = x;}
 }
-
 class Solution {
-    public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
-        if(t1 == null && t2 == null){
-            return null;
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null && q == null){
+            return true;
+        } else if (p != null && q == null) {
+            return false;
+        } else if (p == null && q != null) {
+            return false;
+        } else {
+            if (p.val == q.val && isSameTree(p.left,q.left) && isSameTree(p.right,q.right)) {
+                return true;
+            } else {
+                return false;
+            }
         }
-        if(t1 != null && t2 == null){
-            return t1;
-        }
-        if(t1 == null && t2 != null){
-            return t2;
-        }
-        if(t1 != null && t2 != null)
-        {
-            t1.val += t2.val;
-            t1.left = mergeTrees(t1.left,t2.left);
-            t1.right = mergeTrees(t1.right,t2.right);
-        }
-        return t1;
     }
 }
 
-public class MergeTrees {
+public class MainClass {
     public static TreeNode stringToTreeNode(String input) {
         input = input.trim();
         input = input.substring(1, input.length() - 1);
@@ -99,43 +95,23 @@ public class MergeTrees {
         return root;
     }
 
-    public static String treeNodeToString(TreeNode root) {
-        if (root == null) {
-            return "[]";
-        }
-
-        String output = "";
-        Queue<TreeNode> nodeQueue = new LinkedList<>();
-        nodeQueue.add(root);
-        while(!nodeQueue.isEmpty()) {
-            TreeNode node = nodeQueue.remove();
-
-            if (node == null) {
-                output += "null, ";
-                continue;
-            }
-
-            output += String.valueOf(node.val) + ", ";
-            nodeQueue.add(node.left);
-            nodeQueue.add(node.right);
-        }
-        return "[" + output.substring(0, output.length() - 2) + "]";
+    public static String booleanToString(boolean input) {
+        return input ? "True" : "False";
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String line;
         while ((line = in.readLine()) != null) {
-            TreeNode t1 = stringToTreeNode(line);
+            TreeNode p = stringToTreeNode(line);
             line = in.readLine();
-            TreeNode t2 = stringToTreeNode(line);
+            TreeNode q = stringToTreeNode(line);
 
-            TreeNode ret = new Solution().mergeTrees(t1, t2);
+            boolean ret = new Solution().isSameTree(p, q);
 
-            String out = treeNodeToString(ret);
+            String out = booleanToString(ret);
 
             System.out.print(out);
         }
     }
 }
-

@@ -1,4 +1,4 @@
-package com.guoxu.sametree;
+package com.guoxu.maxmumofbinarytree;
 
 /* -----------------------------------
  *  WARNING:
@@ -26,31 +26,31 @@ import java.util.Queue;
  *     TreeNode(int x) { val = x; }
  * }
  */
+
 class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
-    TreeNode(int x) {val = x;}
+    TreeNode(int x) { val = x; }
 }
 class Solution {
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-        if (p == null && q == null){
-            return true;
-        } else if (p != null && q == null) {
-            return false;
-        } else if (p == null && q != null) {
-            return false;
+    public int maxDepth(TreeNode root) {
+        int leftDepth = 0;
+        int rightDepth = 0;
+        if (root == null) {
+            return 0;
+        }
+        leftDepth = 1 + maxDepth(root.left);
+        rightDepth = 1 + maxDepth(root.right);
+        if (leftDepth >= rightDepth){
+            return leftDepth;
         } else {
-            if (p.val == q.val && isSameTree(p.left,q.left) && isSameTree(p.right,q.right)) {
-                return true;
-            } else {
-                return false;
-            }
+            return rightDepth;
         }
     }
 }
 
-public class SameTree {
+public class MainClass {
     public static TreeNode stringToTreeNode(String input) {
         input = input.trim();
         input = input.substring(1, input.length() - 1);
@@ -95,21 +95,15 @@ public class SameTree {
         return root;
     }
 
-    public static String booleanToString(boolean input) {
-        return input ? "True" : "False";
-    }
-
     public static void main(String[] args) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String line;
         while ((line = in.readLine()) != null) {
-            TreeNode p = stringToTreeNode(line);
-            line = in.readLine();
-            TreeNode q = stringToTreeNode(line);
+            TreeNode root = stringToTreeNode(line);
 
-            boolean ret = new Solution().isSameTree(p, q);
+            int ret = new Solution().maxDepth(root);
 
-            String out = booleanToString(ret);
+            String out = String.valueOf(ret);
 
             System.out.print(out);
         }
