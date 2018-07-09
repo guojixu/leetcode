@@ -47,7 +47,7 @@ class Solution {
     }
 }
 
-public class InvertBinaryTree {
+public class MainClass {
     public static TreeNode stringToTreeNode(String input) {
         input = input.trim();
         input = input.substring(1, input.length() - 1);
