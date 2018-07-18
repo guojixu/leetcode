@@ -22,7 +22,6 @@ class Solution {
         return res;
     }
 }
-
 public class MainClass {
     public static int[] stringToIntegerArray(String input) {
         input = input.trim();
