@@ -55,6 +55,7 @@ class Solution {
 //            }
 //        }
 //        return head.next;
+
         if (head == null && head.next == null) {
             return head;
         }
