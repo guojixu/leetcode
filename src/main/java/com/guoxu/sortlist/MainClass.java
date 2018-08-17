@@ -30,15 +30,36 @@ class ListNode {
 }
 class Solution {
     public ListNode sortList(ListNode head) {
-        if (head == null || head.next == null) {
+//        if (head == null || head.next == null) {
+//            return head;
+//        }
+//        ListNode headtemp = new ListNode(Integer.MIN_VALUE);
+//        headtemp.next = head;
+//        head = headtemp;
+//        ListNode p = head.next;
+//        ListNode q = null;
+//        ListNode r = null;
+//        if (p != null) {
+//            r = p.next;
+//            p.next = null;
+//            p = r;
+//            while (p != null) {
+//                r = p.next;
+//                q = head;
+//                while (q.next != null && q.next.val < p.val) {
+//                    q = q.next;
+//                }
+//                p.next = q.next;
+//                q.next = p;
+//                p = r;
+//            }
+//        }
+//        return head.next;
+        if (head == null && head.next == null) {
             return head;
         }
-        ListNode headtemp = new ListNode(Integer.MIN_VALUE);
-        headtemp.next = head;
-        head = headtemp;
-        ListNode p = head.next;
-        ListNode q = null;
-        ListNode r = null;
+        ListNode p = head;
+        ListNode q = null,r = null,pr = null;
         if (p != null) {
             r = p.next;
             p.next = null;
@@ -46,15 +67,22 @@ class Solution {
             while (p != null) {
                 r = p.next;
                 q = head;
-                while (q.next != null && q.next.val < p.val) {
+                pr = head;
+                while (q != null && q.val < p.val) {
+                    pr = q;
                     q = q.next;
                 }
-                p.next = q.next;
-                q.next = p;
+                if (pr == head) {
+                    p.next = head;
+                    head = p;
+                } else {
+                    p.next = pr.next;
+                    pr.next = p;
+                }
                 p = r;
             }
         }
-        return head.next;
+        return head;
     }
 }
 
